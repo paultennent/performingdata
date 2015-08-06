@@ -1,0 +1,48 @@
+<!--Sample WS connecting page.
+Provides two handlers:
+	DataHandler, called when messages comie in - passed to WSUtils in the GetData Call.
+	StatusHandler, deals with log messages. Passed to the connect function. Passing this as null just ignores the messages.
+-->
+
+<html>
+<head>
+<title>WebSocket Tester</title>
+<script type="text/javascript" src = "WSUtil.js">
+</script>
+<script type="text/javascript">
+	
+	function DataHandler(data){
+		messageBox.value = data + '\n';
+	}
+
+	function StatusHandler(data){
+		logBox.value = data + '\n';
+	}
+
+	function Connected(){
+		//any setup stuff
+	}
+
+	function init(){
+		logBox = document.getElementById('log');
+  		messageBox = document.getElementById('message');
+  		connect(StatusHandler,Connected);
+	}
+
+	function GS(){
+		args = GetArgumentObject("GetState");
+		SendRequest(args,DataHandler);
+	}
+
+</script>
+
+</head>
+<body onload="init()">
+<button onclick="GS()">GetData</button>
+<br>
+<textarea id="message" rows="10" cols="40" style="width: 620px; height: 400px;" readonly></textarea>
+
+<p>Status:</p>
+<textarea id="log" rows="10" cols="40" style="width: 1240px; height: 100px;" readonly></textarea><br>
+</body>
+</html>
